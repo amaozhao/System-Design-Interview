@@ -125,14 +125,14 @@ UUID 是另一种获取唯一 ID 的简单方法。 UUID 是一个 128 位的数
 
 如果在采访结束时有额外的时间，这里有一些额外的谈话要点：
 
-- 时钟同步。在我们的设计中，我们假设 ID 生成服务器具有相同的时钟。当服务器在多个内核上运行时，此假设可能不成立。同样的挑战也存在于多机场景中。时钟同步的解决方案超出了本书的范围；但是，重要的是要了解问题的存在。网络时间协议是这个问题最流行的解决方案。感兴趣的读者请参阅参考资料 ~[4]~。
+- 时钟同步。在我们的设计中，我们假设 ID 生成服务器具有相同的时钟。当服务器在多个内核上运行时，此假设可能不成立。同样的挑战也存在于多机场景中。时钟同步的解决方案超出了本书的范围；但是，重要的是要了解问题的存在。网络时间协议是这个问题最流行的解决方案。感兴趣的读者请参阅参考资料 [4]。
 - 部分长度调整。例如，更少的序列号但更多的时间戳位对于低并发和长期应用程序是有效的。
 - 高可用性。由于 ID 生成器是任务关键型系统，因此它必须具有高可用性。
 
 恭喜你走到这一步！现在拍拍自己的后背。好样的！
 
 ### 参考资料
-[1] 通用唯一标识符：https://en.wikipedia.org/wiki/Universally_unique_identifier
-[2] 票务服务器：廉价的分布式唯一主键：https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/
-[3] 宣布雪花：https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html
-[4] 网络时间协议：https://en.wikipedia.org/wiki/Network_Time_Protocol
+1. 通用唯一标识符：https://en.wikipedia.org/wiki/Universally_unique_identifier
+2. 票务服务器：廉价的分布式唯一主键：https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/
+3. 宣布雪花：https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html
+4. 网络时间协议：https://en.wikipedia.org/wiki/Network_Time_Protocol

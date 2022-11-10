@@ -170,6 +170,5 @@ URL重定向的流程总结如下：
 恭喜你走到这一步！现在拍拍自己的后背。好样的！
 
 ### 参考资料
-[1] RESTful 教程：https://www.restapitutorial.com/index.html
-
-[2] 布隆过滤器：https://en.wikipedia.org/wiki/Bloom_filter
+1. RESTful 教程：https://www.restapitutorial.com/index.html
+2. 布隆过滤器：https://en.wikipedia.org/wiki/Bloom_filter
