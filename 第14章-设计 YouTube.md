@@ -3,7 +3,7 @@
 
 ![](./images/Chapter-14/14-01.png)
 
-YouTube 看起来很简单：内容创作者上传视频，观众点击播放。 真的那么简单吗？ 并不是。 简单的背后隐藏着许多复杂的技术。 让我们看看 2020 年 YouTube [1] [2] 的一些令人印象深刻的统计数据、人口统计数据和有趣的事实。
+YouTube 看起来很简单：内容创作者上传视频，观众点击播放。 真的那么简单吗？ 并不是。 简单的背后隐藏着许多复杂的技术。 让我们看看 2020 年 YouTube [^1] [^2] 的一些令人印象深刻的统计数据、人口统计数据和有趣的事实。
 
 - 月活跃用户总数：20亿。
 - 每天观看的视频数量：50 亿。
@@ -65,7 +65,7 @@ YouTube 看起来很简单：内容创作者上传视频，观众点击播放。
 - 每日所需的总存储空间：500 万 * 10% * 300 MB = 150TB
 - CDN 费用：
   - 当云CDN 提供视频时，你需要为从CDN 传输的数据付费。
-  - 让我们使用 Amazon 的 CDN CloudFront 进行成本估算（图 14-2）[3]。假设 100% 的流量来自美国。每 GB 的平均成本为 0.02 美元。为简单起见，我们只计算视频流的成本。
+  - 让我们使用 Amazon 的 CDN CloudFront 进行成本估算（图 14-2）[^3]。假设 100% 的流量来自美国。每 GB 的平均成本为 0.02 美元。为简单起见，我们只计算视频流的成本。
   - 500 万 * 5 个视频 * 0.3GB * 0.02 美元 = 每天 150,000 美元。
 
 根据粗略的成本估算，我们知道从 CDN 提供视频需要花费大量资金。尽管云提供商愿意为大客户大幅降低 CDN 成本，但成本仍然很高。我们将深入探讨降低 CDN 成本的方法。
@@ -76,7 +76,7 @@ YouTube 看起来很简单：内容创作者上传视频，观众点击播放。
 如前所述，面试官建议利用现有的云服务，而不是从头开始构建一切。 CDN 和 blob 存储是我们将利用的云服务。有些读者可能会问，为什么不自己构建所有东西呢？原因如下：
 
 - 系统设计面试不是要从头开始构建所有东西。在有限的时间范围内，选择正确的技术来做正确的工作比详细解释技术如何工作更重要。例如，提到用于存储源视频的 blob 存储对于采访来说就足够了。谈论 Blob 存储的详细设计可能有点矫枉过正。
-- 构建可扩展的blob 存储或CDN 极其复杂且成本高昂。即使是像 Netflix 或 Facebook 这样的大公司也不会自己构建一切。 Netflix 利用 Amazon 的云服务 [4]，Facebook 使用 Akamai 的 CDN [5]。
+- 构建可扩展的blob 存储或CDN 极其复杂且成本高昂。即使是像 Netflix 或 Facebook 这样的大公司也不会自己构建一切。 Netflix 利用 Amazon 的云服务 [^4]，Facebook 使用 Akamai 的 CDN [^5]。
 
 在高层次上，该系统包括三个组件（图 14-3）。
 
@@ -107,7 +107,7 @@ YouTube 看起来很简单：内容创作者上传视频，观众点击播放。
 - API 服务器：所有用户请求都通过API 服务器，视频流除外。
 - 元数据数据库：视频元数据存储在元数据数据库中。它被分片和复制以满足性能和高可用性要求。
 - 元数据缓存：为了获得更好的性能，缓存了视频元数据和用户对象。
-- 原始存储：一个blob存储系统用于存储原始视频。维基百科中关于 blob 存储的引用表明：“二进制大对象 (BLOB) 是在数据库管理系统中存储为单个实体的二进制数据的集合”[6]。
+- 原始存储：一个blob存储系统用于存储原始视频。维基百科中关于 blob 存储的引用表明：“二进制大对象 (BLOB) 是在数据库管理系统中存储为单个实体的二进制数据的集合”[^6]。
 - 转码服务器：视频转码也称为视频编码。这是将视频格式转换为其他格式（MPEG、HLS 等）的过程，可为不同的设备和带宽能力提供可能的最佳视频流。
   •转码存储：它是一种存储转码视频文件的blob 存储。
 - CDN：视频缓存在CDN 中。单击播放按钮时，视频将从 CDN 流式传输。
@@ -150,7 +150,7 @@ YouTube 看起来很简单：内容创作者上传视频，观众点击播放。
 - 微软平滑流媒体。
 - Adobe HTTP 动态流 (HDS)。
 
-你不需要完全理解甚至记住这些流协议名称，因为它们是需要特定领域知识的低级细节。这里重要的是要了解不同的流协议支持不同的视频编码和播放播放器。当我们设计视频流服务时，我们必须选择正确的流协议来支持我们的用例。要了解有关流协议的更多信息，请参阅一篇优秀的文章 [7]。
+你不需要完全理解甚至记住这些流协议名称，因为它们是需要特定领域知识的低级细节。这里重要的是要了解不同的流协议支持不同的视频编码和播放播放器。当我们设计视频流服务时，我们必须选择正确的流协议来支持我们的用例。要了解有关流协议的更多信息，请参阅一篇优秀的文章 [^7]。
 
 视频直接从 CDN 流式传输。离你最近的边缘服务器将传送视频。因此，延迟非常小。图 14-7 显示了视频流的高级设计。
 
@@ -177,7 +177,7 @@ YouTube 看起来很简单：内容创作者上传视频，观众点击播放。
 #### 有向无环图 (DAG) 模型
 对视频进行转码计算成本高且耗时。此外，不同的内容创作者可能有不同的视频处理要求。例如，一些内容创建者需要在他们的视频顶部添加水印，一些自己提供缩略图，还有一些上传高清视频，而另一些则不需要。
 
-为了支持不同的视频处理流水线并保持高并行性，添加一定程度的抽象并让客户端程序员定义要执行的任务非常重要。例如，Facebook 的流视频引擎使用有向无环图 (DAG) 编程模型，该模型分阶段定义任务，以便它们可以按顺序或并行执行 [8]。在我们的设计中，我们采用了类似的 DAG 模型来实现灵活性和并行性。图 14-8 表示用于视频转码的 DAG。
+为了支持不同的视频处理流水线并保持高并行性，添加一定程度的抽象并让客户端程序员定义要执行的任务非常重要。例如，Facebook 的流视频引擎使用有向无环图 (DAG) 编程模型，该模型分阶段定义任务，以便它们可以按顺序或并行执行 [^8]。在我们的设计中，我们采用了类似的 DAG 模型来实现灵活性和并行性。图 14-8 表示用于视频转码的 DAG。
 
 ![](./images/Chapter-14/14-08.png)
 
@@ -370,16 +370,16 @@ CDN 是我们系统的重要组成部分。它确保在全球范围内快速传�
 
 ### 参考资料
 
-1. YouTube 的数字：https://www.omnicoreagency.com/youtube-statistics/
-2. 2019 年 YouTube 受众特征：https://blog.hubspot.com/marketing/youtube-demographics
-3. Cloudfront 定价：https://aws.amazon.com/cloudfront/pricing/
-4. AWS 上的 Netflix：https://aws.amazon.com/solutions/case-studies/netflix/
-5. Akamai 主页：https://www.akamai.com/
-6. 二进制大对象：https://en.wikipedia.org/wiki/Binary_large_object
-7. 以下是你需要了解的有关流协议的内容：https://www.dacast.com/blog/streaming-protocols/
-8. SVE：Facebook 规模的分布式视频处理：https://www.cs.princeton.edu/~wlloyd/papers/sve-sosp17.pdf
-9. 微博视频处理架构（中文）：https://www.upyun.com/opentalk/399.html
-10. 使用共享访问签名委托访问：https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
-11. YouTube 早期员工的 YouTube 可扩展性演讲：https://www.youtube.com/watch?v=w5WVu624fY8
-12. 了解互联网短视频分享的特点：基于 youtube 的测量研究。 https://arxiv.org/pdf/0707.3670.pdf
-13. Open Connect 的内容流行度：https://netflixtechblog.com/content-popularity-for-open-connect-b86d56f613b
+[1] YouTube 的数字：https://www.omnicoreagency.com/youtube-statistics/
+[2] 2019 年 YouTube 受众特征：https://blog.hubspot.com/marketing/youtube-demographics
+[3] Cloudfront 定价：https://aws.amazon.com/cloudfront/pricing/
+[4] AWS 上的 Netflix：https://aws.amazon.com/solutions/case-studies/netflix/
+[5] Akamai 主页：https://www.akamai.com/
+[6] 二进制大对象：https://en.wikipedia.org/wiki/Binary_large_object
+[7] 以下是你需要了解的有关流协议的内容：https://www.dacast.com/blog/streaming-protocols/
+[8] SVE：Facebook 规模的分布式视频处理：https://www.cs.princeton.edu/~wlloyd/papers/sve-sosp17.pdf
+[9] 微博视频处理架构（中文）：https://www.upyun.com/opentalk/399.html
+[10] 使用共享访问签名委托访问：https://docs.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
+[11] YouTube 早期员工的 YouTube 可扩展性演讲：https://www.youtube.com/watch?v=w5WVu624fY8
+[12] 了解互联网短视频分享的特点：基于 youtube 的测量研究。 https://arxiv.org/pdf/0707.3670.pdf
+[13] Open Connect 的内容流行度：https://netflixtechblog.com/content-popularity-for-open-connect-b86d56f613b

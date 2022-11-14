@@ -38,13 +38,13 @@
 
 #### API 端点
 
-API 端点促进客户端和服务器之间的通信。我们将设计 API REST 样式。如果对restful API不熟悉，可以参考外部资料，比如参考资料～[1]～中的那个。 URL 短链器主要需要两个 API 端点。
+API 端点促进客户端和服务器之间的通信。我们将设计 API REST 样式。如果对restful API不熟悉，可以参考外部资料，比如参考资料[^1]中的那个。 URL 短链器主要需要两个 API 端点。
 1. URL短链。为了创建一个新的短 URL，客户端发送一个 POST 请求，其中包含一个参数：原始长 URL。 API 如下所示：
-    POST api/v1/数据/短链
+    POST ```api/v1/数据/短链```
   - 请求参数：{longUrl：longURLString}
   - 返回短网址
 2. URL重定向。为了将短 URL 重定向到相应的长 URL，客户端发送 GET 请求。 API 如下所示：
-    获取 api/v1/shortUrl
+    获取 ```api/v1/shortUrl```
   - 返回longURL 进行HTTP 重定向
 
 #### 网址重定向
@@ -109,7 +109,7 @@ hashValue 由 [0-9, a-z, A-Z] 中的字符组成，包含 10 + 26 + 26 = 62 个�
 
 ![](./images/Chapter-8/8-05.png)
 
-这种方法可以消除碰撞；但是，查询数据库以检查每个请求是否存在 shortURL 的成本很高。一种称为布隆过滤器 [2] 的技术可以提高性能。布隆过滤器是一种节省空间的概率技术，用于测试元素是否是集合的成员。有关详细信息，请参阅参考资料 [2]。
+这种方法可以消除碰撞；但是，查询数据库以检查每个请求是否存在 shortURL 的成本很高。一种称为布隆过滤器 [^2] 的技术可以提高性能。布隆过滤器是一种节省空间的概率技术，用于测试元素是否是集合的成员。有关详细信息，请参阅参考资料 [^2]。
 
 #### Base 62 转换
 基本转换是 URL 短链器常用的另一种方法。基本转换有助于在其不同的数字表示系统之间转换相同的数字。使用 Base 62 转换，因为 hashValue 有 62 个可能的字符。让我们用一个例子来解释转换是如何工作的：将 1115710 转换为 base 62 表示（1115710 表示在 base 10 系统中的 11157）。
@@ -170,5 +170,5 @@ URL重定向的流程总结如下：
 恭喜你走到这一步！现在鼓励一下自己， 非常棒！
 
 ### 参考资料
-1. RESTful 教程：https://www.restapitutorial.com/index.html
-2. 布隆过滤器：https://en.wikipedia.org/wiki/Bloom_filter
+[1] RESTful 教程：https://www.restapitutorial.com/index.html
+[2] 布隆过滤器：https://en.wikipedia.org/wiki/Bloom_filter
